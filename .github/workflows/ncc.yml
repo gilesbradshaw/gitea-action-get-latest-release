@@ -25,6 +25,8 @@ jobs:
           npm run package
       - name: commit and push
         run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.event.pusher.email }}"
           git add -A
           git commit -m "Update ncc build to latest version"
           git push origin HEAD
