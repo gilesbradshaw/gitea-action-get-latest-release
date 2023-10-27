@@ -7,6 +7,7 @@ const token = core.getInput('token');
 const excludes = core.getInput('excludes')?.trim()?.split(",");
 
 async function run() {
+  console.log('running')
   try {    
     const api = new giteaApi(
       (github.context.runId && github.context.serverUrl)
@@ -41,10 +42,13 @@ async function run() {
       core.setOutput('description', String(releases[0].body));
       // core.setOutput('releases', releases);
     } else {
+      console.log('no')
+  
       core.setFailed("No valid releases");
     }
   }
   catch (error) {
+    console.log(ex)
     core.setFailed(error.message);
   }
 }
