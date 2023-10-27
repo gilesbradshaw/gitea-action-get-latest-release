@@ -8,7 +8,7 @@ branding:
   color: 'orange'
 inputs:
   owner:
-    description: 'The Github user or organization that owns the repository'
+    description: 'The Gitea user or organization that owns the repository'
     required: false
   repo:
     description: 'The repository name'
@@ -20,7 +20,7 @@ inputs:
     description: 'Types of releases to exclude (e.g. pre-release)'
     required: false
   token:
-    description: 'The GitHub token or personal access token'
+    description: 'The gitea token or personal access token'
     required: false
 outputs:
   release:

@@ -50,13 +50,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: keydb
-        uses: gilesbradshaw/gitea-action-get-latest-release@master
+        uses: gilesbradshaw/gitea-action-get-latest-release@main
         with:
           owner: JohnSully
           repo: KeyDB
           excludes: prerelease, draft
       - id: timeseries
-        uses: gilesbradshaw/gitea-action-get-latest-release@master
+        uses: gilesbradshaw/gitea-action-get-latest-release@main
         with:
           repository: RedisTimeSeries/RedisTimeSeries
       - uses: actions/checkout@v3
