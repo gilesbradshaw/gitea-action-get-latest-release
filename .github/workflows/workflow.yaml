@@ -10,6 +10,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: npm i
+      - run: pwd
+      - run: ls
       - uses: ./
         with:
           repository: gitea/tea
