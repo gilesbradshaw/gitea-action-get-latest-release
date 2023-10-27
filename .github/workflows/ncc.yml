@@ -27,6 +27,11 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.event.pusher.email }}"
-          git add -A
-          git commit -m "Update ncc build to latest version"
-          git push origin HEAD
+          if [[ $(git diff | wc -c) -eq 0 ]]; then
+            git add -A
+            git commit -m "Update ncc build to latest version"
+            git push origin HEAD
+          else
+            echo no changes
+          fi
+          
