@@ -15421,8 +15421,7 @@ const token = core.getInput('token');
 const excludes = core.getInput('excludes')?.trim()?.split(",");
 
 async function run() {
-  try {
-    
+  try {    
     const api = new giteaApi(
       (github.context.runId && github.context.serverUrl)
         || 'https://gitea.com/',
@@ -15450,7 +15449,6 @@ async function run() {
             true,
           ),
       );   
-    console.log({ releases }) 
     if (releases.length) {
       core.setOutput('release', releases[0].tag_name);
       core.setOutput('id', String(releases[0].id));
@@ -15461,7 +15459,6 @@ async function run() {
     }
   }
   catch (error) {
-    console.error(error)
     core.setFailed(error.message);
   }
 }
