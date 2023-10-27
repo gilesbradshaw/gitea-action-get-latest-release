@@ -15418,7 +15418,7 @@ const github = __nccwpck_require__(5438);
 const { giteaApi } = __nccwpck_require__(6814);
 const fetch = __nccwpck_require__(9805);
 const token = core.getInput('token');
-const serverUrl = core.getInput('severUrl');
+const serverUrl = core.getInput('serverUrl');
 const excludes = core.getInput('excludes')?.trim()?.split(",");
 
 async function run() {
