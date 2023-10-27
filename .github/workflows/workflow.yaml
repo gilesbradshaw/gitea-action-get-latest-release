@@ -26,8 +26,3 @@ jobs:
           repository: gitea/tea
           serverUrl: https://gitea.com/
           token: ${{ github.token }}
-      - uses: gilesbradshaw/gitea-action-get-latest-release@${{ github.ref_name }}
-          repository: gitea/tea
-          serverUrl: https://gitea.com/
-          excludes: prerelease, draft
-          token: ${{ github.token }}
