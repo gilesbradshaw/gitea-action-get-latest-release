@@ -30,6 +30,8 @@ async function run() {
     if (excludes.includes('draft')) {
       releases = releases.filter(x => x.draft != true);
     }
+    console.log(releases.length)
+    console.log(JSON.stringify({ releases }, null, 2))
     if (releases.length) {
       core.setOutput('release', releases[0].tag_name);
       core.setOutput('id', String(releases[0].id));
