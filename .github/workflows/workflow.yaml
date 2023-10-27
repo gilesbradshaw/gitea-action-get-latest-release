@@ -12,7 +12,7 @@ jobs:
       - run: npm i
       - run: pwd
       - run: ls
-      - uses: /home/runner/work/gitea-action-get-latest-release/gitea-action-get-latest-release
+      - uses: gilesbradshaw/gitea-action-get-latest-release@main
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
