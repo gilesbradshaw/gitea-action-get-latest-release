@@ -23,10 +23,8 @@ jobs:
           npm install
           npm i -g @vercel/ncc
           npm run package
-      - name: Push updated ncc build if available
-        uses: test-room-7/action-update-file@v1
-        with:
-          branch: ${{ env.GITHUB_BRANCH }}
-          file-path: dist/*
-          commit-msg: Update ncc build to latest version
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: commit and push
+        run: |
+          git add -A
+          git commit -m "Update ncc build to latest version"
+          git push origin HEAD
