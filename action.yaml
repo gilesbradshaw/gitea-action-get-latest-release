@@ -7,17 +7,13 @@ branding:
   icon: 'anchor'
   color: 'orange'
 inputs:
-  owner:
-    description: 'The Gitea user or organization that owns the repository'
-    required: false
-  repo:
-    description: 'The repository name'
-    required: false
+  serverUrl:
+    description: the Url of the gitea API
   repository:
     description: 'The repository name in full'
     required: false
   excludes:
-    description: 'Types of releases to exclude (e.g. pre-release)'
+    description: 'Types of releases to exclude (e.g. prerelease)'
     required: false
   token:
     description: 'The gitea token or personal access token'

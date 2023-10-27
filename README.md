@@ -3,7 +3,7 @@ Get Latest Release
 
 A simple gitea action to get the latest release from another repository. No authentication required.
 
-based on https://github.com/gilesbradshaw/gitea-action-get-latest-release
+based on https://github.com/pozetroninc/github-action-get-latest-release.git
 
 Configuration
 =============
