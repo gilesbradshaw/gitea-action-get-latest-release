@@ -12,16 +12,16 @@ jobs:
       - run: npm i
       - run: pwd
       - run: ls
-      - uses: gilesbradshaw/gitea-action-get-latest-release@${{ github.ref_name }}
+      - uses: gilesbradshaw/gitea-action-get-latest-release@debugger
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
-      - uses: gilesbradshaw/gitea-action-get-latest-release@${{ github.ref_name }}
+      - uses: gilesbradshaw/gitea-action-get-latest-release@debugger
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
           excludes: preRelease, draft
-      - uses: gilesbradshaw/gitea-action-get-latest-release@${{ github.ref_name }}
+      - uses: gilesbradshaw/gitea-action-get-latest-release@debugger
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
