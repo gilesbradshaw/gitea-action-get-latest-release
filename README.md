@@ -14,21 +14,13 @@ Example Repository - https://github.com/pozetroninc/github-action-get-latest-rel
 
 Name | Description | Example
 --- | --- | ---
-owner | The Github user or organization that owns the repository |  gilesbradshaw
-repo | The repository name | github-action-get-latest-release
-
-**or**
-Name | Description | Example
---- | --- | ---
-repository | The repository name in full | gilesbradshaw/gitea-action-get-latest-release
+repository | The repository name in full | sigyl-actions/gitea-action-get-latest-release
 
 **Additional Inputs (Optional)**
 Name | Description | Example
 --- | --- | ---
-excludes | Exclude draft or pre-release versions. | "prerelease, draft"
+excludes | comma separated lists - if release field preset will exlude | "prerelease, draft"
 token | GitHub token or personal access token | `${{ secrets.GITHUB_TOKEN }}` or `${{ secrets.PERSONAL_ACCESS_TOKEN }}`
-
-Using the `GITHUB_TOKEN` will avoid the action [failing due to hitting API rate limits](https://github.com/gilesbradshaw/gitea-action-get-latest-release/issues/24) from the IP address of the GitHub runner your action is running on. Using a `PERSONAL_ACCESS_TOKEN` is required to get the release information from a private repo. You can read about [how to create a personal access token here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) and how to [add this as a repository secret here](https://docs.github.com/en/github/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets).
 
 **Outputs**
 
@@ -40,6 +32,7 @@ description | The latest release description body | This is an example release
 
 Usage Example
 =============
+
 ``` yaml
 name: Build Docker Images
 on: [push, repository_dispatch]
@@ -50,13 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: keydb
-        uses: gilesbradshaw/gitea-action-get-latest-release@main
+        uses: sigyl-actions/gitea-action-get-latest-release@main
         with:
-          owner: JohnSully
-          repo: KeyDB
           excludes: prerelease, draft
       - id: timeseries
-        uses: gilesbradshaw/gitea-action-get-latest-release@main
+        uses: sigyl-actions/gitea-action-get-latest-release@main
         with:
           repository: RedisTimeSeries/RedisTimeSeries
       - uses: actions/checkout@v3
@@ -64,21 +55,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: gilesbradshaw/keydb-timeseries
+          repository: sigyl-actions/keydb-timeseries
           dockerfile: timeseries.dockerfile
           build_args: KEY_DB_VERSION=${{ steps.keydb.outputs.release }}, REDIS_TIME_SERIES_VERSION=${{ steps.timeseries.outputs.release }}
           tags: latest, ${{ steps.keydb.outputs.release }}_${{ steps.timeseries.outputs.release }}
 
-```
-
-To use the current repo:
-``` yaml
-with:
-  repository: ${{ github.repository }}
-```
-
-To use authentication token:
-``` yaml
-with:
-  token: ${{ secrets.GITHUB_TOKEN }}
 ```
