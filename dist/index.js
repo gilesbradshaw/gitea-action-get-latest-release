@@ -15417,11 +15417,8 @@ const github = __nccwpck_require__(5438);
 
 const { giteaApi } = __nccwpck_require__(6814);
 const fetch = __nccwpck_require__(9805);
-const repository = core.getInput('repository');
 const token = core.getInput('token');
-var owner = core.getInput('owner');
-var repo = core.getInput('repo');
-var excludes = core.getInput('excludes').trim().split(",");
+const excludes = core.getInput('excludes').trim().split(",");
 
 async function run() {
   try {
@@ -15433,23 +15430,28 @@ async function run() {
       },
     );
     
-    if (repository) {
-      [owner, repo] = repository.split("/");
-    }    
-    var releases = await api.repos.repoListReleases(owner, repo);
-    releases = releases.data;
-    if (excludes.includes('prerelease')) {
-      releases = releases.filter(x => x.prerelease != true);
-    }
-    if (excludes.includes('draft')) {
-      releases = releases.filter(x => x.draft != true);
-    }
-    console.log(releases.length)
-    console.log(JSON.stringify({ releases }, null, 2))
+    const [owner, repo] = (
+      core.getInput('repository')
+        || github.context.repository
+    ).split("/");
+
+    const releases = (
+      await api.repos.repoListReleases(owner, repo)
+    )
+      .data
+      .filter(
+        (release) => excludes
+          .reduce(
+            (acc, exclude) => acc
+              && !release[exclude],
+            true,
+          ),
+      );    
     if (releases.length) {
       core.setOutput('release', releases[0].tag_name);
       core.setOutput('id', String(releases[0].id));
       core.setOutput('description', String(releases[0].body));
+      // core.setOutput('releases', releases);
     } else {
       core.setFailed("No valid releases");
     }
