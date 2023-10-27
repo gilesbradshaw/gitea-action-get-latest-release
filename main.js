@@ -4,13 +4,15 @@ const github = require('@actions/github');
 const { giteaApi } = require("gitea-js");
 const fetch = require('cross-fetch');
 const token = core.getInput('token');
+const serverUrl = core.getInput('severUrl');
 const excludes = core.getInput('excludes')?.trim()?.split(",");
 
 async function run() {
   console.log('running')
   try {    
     const api = new giteaApi(
-      (github.context.runId && github.context.serverUrl)
+      serverUrl
+        || (github.context.runId && github.context.serverUrl)
         || 'https://gitea.com/',
       {
         token,
