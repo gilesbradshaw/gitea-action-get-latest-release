@@ -4,12 +4,13 @@ const github = require('@actions/github');
 const { giteaApi } = require("gitea-js");
 const fetch = require('cross-fetch');
 const token = core.getInput('token');
-const excludes = core.getInput('excludes').trim().split(",");
+const excludes = core.getInput('excludes')?.trim()?.split(",");
 
 async function run() {
-  try {
+  try {    
     const api = new giteaApi(
-      github.context.serverUrl,
+      (github.context.runId && github.context.serverUrl)
+        || 'https://gitea.com/',
       {
         token,
         customFetch: fetch,
@@ -19,6 +20,7 @@ async function run() {
     const [owner, repo] = (
       core.getInput('repository')
         || github.context.repository
+        || 'gitea/tea'
     ).split("/");
 
     const releases = (
@@ -26,13 +28,13 @@ async function run() {
     )
       .data
       .filter(
-        (release) => excludes
+        (release) => (excludes || [])
           .reduce(
             (acc, exclude) => acc
               && !release[exclude],
             true,
           ),
-      );    
+      );   
     if (releases.length) {
       core.setOutput('release', releases[0].tag_name);
       core.setOutput('id', String(releases[0].id));

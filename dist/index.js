@@ -15418,12 +15418,14 @@ const github = __nccwpck_require__(5438);
 const { giteaApi } = __nccwpck_require__(6814);
 const fetch = __nccwpck_require__(9805);
 const token = core.getInput('token');
-const excludes = core.getInput('excludes').trim().split(",");
+const excludes = core.getInput('excludes')?.trim()?.split(",");
 
 async function run() {
   try {
+    
     const api = new giteaApi(
-      github.context.serverUrl,
+      (github.context.runId && github.context.serverUrl)
+        || 'https://gitea.com/',
       {
         token,
         customFetch: fetch,
@@ -15433,6 +15435,7 @@ async function run() {
     const [owner, repo] = (
       core.getInput('repository')
         || github.context.repository
+        || 'gitea/tea'
     ).split("/");
 
     const releases = (
@@ -15440,13 +15443,14 @@ async function run() {
     )
       .data
       .filter(
-        (release) => excludes
+        (release) => (excludes || [])
           .reduce(
             (acc, exclude) => acc
               && !release[exclude],
             true,
           ),
-      );    
+      );   
+    console.log({ releases }) 
     if (releases.length) {
       core.setOutput('release', releases[0].tag_name);
       core.setOutput('id', String(releases[0].id));
@@ -15457,6 +15461,7 @@ async function run() {
     }
   }
   catch (error) {
+    console.error(error)
     core.setFailed(error.message);
   }
 }
