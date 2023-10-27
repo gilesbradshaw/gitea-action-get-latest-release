@@ -16,12 +16,12 @@ jobs:
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
-      - uses: gilesbradshaw/gitea-action-get-latest-release@debugger
+      - uses: ./
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
           excludes: preRelease, draft
-      - uses: gilesbradshaw/gitea-action-get-latest-release@debugger
+      - uses: ./
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
