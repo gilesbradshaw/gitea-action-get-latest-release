@@ -10,23 +10,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: npm i
-      - uses: ./action.yml
+      - uses: ./
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
-      - uses: ./action.yml
+      - uses: ./
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
           excludes: preRelease, draft
-      - uses: ./action.yml
+      - uses: ./
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./action.yml
+          token: ${{ github.token }}
+      - uses: ./
         with:
           repository: gitea/tea
           serverUrl: https://gitea.com/
           excludes: prerelease, draft
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
